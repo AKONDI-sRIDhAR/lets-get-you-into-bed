@@ -1,1 +1,4 @@
 project_id = "oclfriltpypljuermccl"
+
+[functions.upload-story]
+verify_jwt = false

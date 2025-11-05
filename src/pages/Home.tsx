@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import StoryCard from "@/components/StoryCard";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import StarField from "@/components/StarField";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Story {
   id: string;
+  slug: string;
   title: string;
   date: string;
   excerpt: string;
@@ -11,62 +14,115 @@ interface Story {
 }
 
 const Home = () => {
-  const [stories, setStories] = useState<Story[]>([]);
+  const [latestStory, setLatestStory] = useState<Story | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load stories from JSON
-    fetch("/src/data/stories.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const sortedStories = data.sort(
-          (a: Story, b: Story) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
-        setStories(sortedStories);
-      })
-      .catch((error) => {
-        console.error("Error loading stories:", error);
-      });
+    // Load the latest story from database
+    const loadLatestStory = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('stories')
+          .select('*')
+          .order('date', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (error) {
+          console.error("Error loading story:", error);
+        } else if (data) {
+          setLatestStory(data);
+        }
+      } catch (error) {
+        console.error("Error loading story:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadLatestStory();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen relative flex items-center justify-center">
+        <StarField />
+        <div className="relative z-10 text-center">
+          <div className="animate-pulse text-primary text-2xl">Loading tonight's story...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!latestStory) {
+    return (
+      <div className="min-h-screen relative flex items-center justify-center">
+        <StarField />
+        <div className="relative z-10 text-center">
+          <p className="text-xl text-muted-foreground">No stories yet — check back at bedtime 🌜</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen relative">
       <StarField />
       
-      <div className="relative z-10 container mx-auto px-6 py-16">
+      <div className="relative z-10 container mx-auto px-6 py-16 max-w-4xl">
         {/* Hero Section */}
         <div className="text-center mb-16 animate-fade-up">
           <h1 className="text-5xl md:text-6xl font-bold mb-4 text-foreground">
             🌙 Let's Get You Into Bed
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Dreamy AI stories, freshly spun every night.
+            Tonight's dreamy bedtime story
           </p>
         </div>
 
-        {/* Stories Grid */}
-        {stories.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {stories.map((story, index) => (
-              <StoryCard
-                key={story.id}
-                id={story.id}
-                title={story.title}
-                date={story.date}
-                excerpt={story.excerpt}
-                index={index}
-              />
+        {/* Story Content */}
+        <article className="bg-card/60 backdrop-blur-sm border border-border/50 rounded-2xl p-8 md:p-12 animate-scale-in hover-lift">
+          <header className="mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
+              {latestStory.title}
+            </h2>
+            <p className="text-muted-foreground text-sm">
+              {new Date(latestStory.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+          </header>
+
+          <div className="prose prose-lg dark:prose-invert prose-p:text-foreground/90 prose-p:leading-relaxed prose-headings:text-foreground max-w-none">
+            {latestStory.content.split("\n\n").map((paragraph, index) => (
+              <p
+                key={index}
+                className="mb-6 animate-fade-up"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {paragraph}
+              </p>
             ))}
           </div>
-        ) : (
-          <div className="text-center text-muted-foreground animate-scale-in">
-            <p className="text-xl">No stories yet — check back at bedtime 🌜</p>
-          </div>
-        )}
 
-        {/* Footer */}
-        <footer className="text-center mt-24 text-muted-foreground text-sm animate-fade-up" style={{ animationDelay: "400ms" }}>
-          <p>Generated by AI & crafted with care 🌌</p>
-        </footer>
+          <div className="text-center mt-12 pt-8 border-t border-border/30">
+            <div className="animate-fade-up">
+              <div className="text-6xl mb-4 animate-[float_3s_ease-in-out_infinite]">🐐</div>
+              <p className="text-2xl font-semibold text-primary mb-2">Good night</p>
+              <p className="text-xl text-muted-foreground">Sweet dreams 🌙</p>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <Link to={`/stories/${latestStory.slug}`}>
+              <Button variant="ghost" className="hover:bg-card/60">
+                View full story →
+              </Button>
+            </Link>
+          </div>
+        </article>
       </div>
     </div>
   );

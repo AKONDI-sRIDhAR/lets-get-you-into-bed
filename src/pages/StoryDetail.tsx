@@ -3,9 +3,11 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import StarField from "@/components/StarField";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Story {
   id: string;
+  slug: string;
   title: string;
   date: string;
   excerpt: string;
@@ -18,17 +20,29 @@ const StoryDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/src/data/stories.json")
-      .then((res) => res.json())
-      .then((data: Story[]) => {
-        const foundStory = data.find((s) => s.id === slug);
-        setStory(foundStory || null);
-        setLoading(false);
-      })
-      .catch((error) => {
+    const loadStory = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('stories')
+          .select('*')
+          .eq('slug', slug)
+          .maybeSingle();
+
+        if (error) {
+          console.error("Error loading story:", error);
+        }
+        
+        setStory(data);
+      } catch (error) {
         console.error("Error loading story:", error);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    if (slug) {
+      loadStory();
+    }
   }, [slug]);
 
   if (loading) {
@@ -97,11 +111,15 @@ const StoryDetail = () => {
               </p>
             ))}
           </div>
-        </article>
 
-        <footer className="text-center mt-12 text-muted-foreground text-sm animate-fade-up">
-          <p>Sweet dreams 🌙</p>
-        </footer>
+          <div className="text-center mt-12 pt-8 border-t border-border/30">
+            <div className="animate-fade-up">
+              <div className="text-6xl mb-4 animate-[float_3s_ease-in-out_infinite]">🐐</div>
+              <p className="text-2xl font-semibold text-primary mb-2">Good night</p>
+              <p className="text-xl text-muted-foreground">Sweet dreams 🌙</p>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   );
