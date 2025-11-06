@@ -91,7 +91,7 @@ const StoryDetail = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
               {story.title}
             </h1>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-lg text-primary font-medium">
               {new Date(story.date).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
@@ -112,11 +112,10 @@ const StoryDetail = () => {
             ))}
           </div>
 
-          <div className="text-center mt-12 pt-8 border-t border-border/30">
+          <div className="text-center mt-12 pt-8 border-t border-primary/20">
             <div className="animate-fade-up">
-              <div className="text-6xl mb-4 animate-[float_3s_ease-in-out_infinite]">🐐</div>
-              <p className="text-2xl font-semibold text-primary mb-2">Good night</p>
-              <p className="text-xl text-muted-foreground">Sweet dreams 🌙</p>
+              <p className="text-3xl font-bold text-primary mb-3">Good night</p>
+              <p className="text-2xl text-foreground font-medium">Sweet dreams 🌙✨</p>
             </div>
           </div>
         </article>

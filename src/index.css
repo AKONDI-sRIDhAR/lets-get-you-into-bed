@@ -8,84 +8,80 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 217 33% 97%;
-    --foreground: 222 47% 11%;
+    --background: 240 10% 98%;
+    --foreground: 240 10% 10%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card: 240 5% 100%;
+    --card-foreground: 240 10% 10%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover: 240 5% 100%;
+    --popover-foreground: 240 10% 10%;
 
-    --primary: 263 70% 50%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 260 60% 65%;
+    --primary-foreground: 240 5% 100%;
 
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 240 5% 20%;
+    --secondary-foreground: 240 5% 98%;
 
-    --muted: 217 19% 27%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 240 5% 90%;
+    --muted-foreground: 240 5% 45%;
 
-    --accent: 263 70% 70%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 260 60% 75%;
+    --accent-foreground: 240 10% 10%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 240 5% 98%;
 
-    --border: 217 19% 35%;
-    --input: 217 19% 27%;
-    --ring: 263 70% 50%;
+    --border: 240 5% 85%;
+    --input: 240 5% 90%;
+    --ring: 260 60% 65%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
 
-    /* Dreamy bedtime colors */
-    --dream-blue: 217 91% 12%;
-    --dream-blue-light: 217 71% 20%;
-    --lavender: 263 70% 70%;
-    --lavender-dark: 263 70% 50%;
-    --cream: 43 100% 98%;
-    --star-glow: 263 70% 70%;
+    /* Clean minimal colors */
+    --night-deep: 240 25% 8%;
+    --night-soft: 240 20% 15%;
+    --lavender-soft: 260 60% 75%;
+    --lavender-bright: 260 60% 65%;
 
     /* Gradients */
-    --gradient-dreamy: linear-gradient(135deg, hsl(217 91% 12%), hsl(217 71% 20%), hsl(263 70% 30%));
-    --gradient-card: linear-gradient(135deg, hsl(217 71% 20% / 0.6), hsl(263 70% 30% / 0.4));
+    --gradient-night: linear-gradient(135deg, hsl(240 25% 8%), hsl(240 20% 15%), hsl(260 40% 20%));
 
     /* Shadows */
-    --shadow-glow: 0 10px 40px -10px hsl(263 70% 50% / 0.4);
-    --shadow-card: 0 4px 20px hsl(217 91% 12% / 0.5);
+    --shadow-soft: 0 4px 20px hsl(240 25% 8% / 0.3);
 
     /* Animation */
-    --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    --background: 217 91% 12%;
-    --foreground: 210 40% 98%;
+    --background: 240 25% 8%;
+    --foreground: 240 5% 98%;
 
-    --card: 217 71% 20%;
-    --card-foreground: 210 40% 98%;
+    --card: 240 20% 15%;
+    --card-foreground: 240 5% 98%;
 
-    --popover: 217 71% 20%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 240 20% 15%;
+    --popover-foreground: 240 5% 98%;
 
-    --primary: 263 70% 70%;
-    --primary-foreground: 217 91% 12%;
+    --primary: 260 60% 75%;
+    --primary-foreground: 240 25% 8%;
 
-    --secondary: 217 71% 20%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 240 20% 15%;
+    --secondary-foreground: 240 5% 98%;
 
-    --muted: 217 19% 27%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 240 15% 25%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 263 70% 50%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 260 60% 65%;
+    --accent-foreground: 240 5% 98%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 240 5% 98%;
 
-    --border: 217 19% 27%;
-    --input: 217 19% 27%;
-    --ring: 263 70% 70%;
+    --border: 240 15% 25%;
+    --input: 240 15% 25%;
+    --ring: 260 60% 75%;
   }
 }
 
@@ -96,7 +92,7 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    background: linear-gradient(135deg, hsl(217 91% 12%), hsl(217 71% 20%), hsl(263 70% 30%));
+    background: linear-gradient(135deg, hsl(240 25% 8%), hsl(240 20% 15%), hsl(260 40% 20%));
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
@@ -107,8 +103,8 @@ All colors MUST be HSL.
     position: fixed;
     inset: 0;
     background-image: 
-      radial-gradient(circle at 20% 30%, hsl(263 70% 70% / 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, hsl(263 70% 50% / 0.15) 0%, transparent 50%);
+      radial-gradient(circle at 20% 30%, hsl(260 60% 75% / 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, hsl(260 60% 65% / 0.06) 0%, transparent 50%);
     pointer-events: none;
     animation: float 20s ease-in-out infinite;
   }

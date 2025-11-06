@@ -38,7 +38,18 @@ Deno.serve(async (req) => {
 
     console.log('Inserting story:', { slug, title, date, excerpt })
 
-    // Insert story into database
+    // Delete all existing stories to keep only the latest
+    const { error: deleteError } = await supabase
+      .from('stories')
+      .delete()
+      .neq('id', '00000000-0000-0000-0000-000000000000') // Delete all rows
+
+    if (deleteError) {
+      console.error('Error deleting old stories:', deleteError)
+      // Continue anyway - not critical if deletion fails
+    }
+
+    // Insert new story into database
     const { data, error } = await supabase
       .from('stories')
       .insert({
