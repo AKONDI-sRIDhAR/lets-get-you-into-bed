@@ -7,6 +7,6 @@ export default defineConfig({
   },
   engine: "classic",
   datasource: {
-    url: env("DATABASE_URL"),
+    url: env("postgresql://postgres:[YOUR_PASSWORD]@db.nxhicgnnrdyuvytukoce.supabase.co:5432/postgres"),
   },
 });
