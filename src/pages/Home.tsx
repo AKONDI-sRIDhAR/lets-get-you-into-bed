@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import StarField from "@/components/StarField";
+import ScrollReveal from "@/components/ScrollReveal";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Story {
@@ -72,10 +73,10 @@ const Home = () => {
       <div className="relative z-10 container mx-auto px-6 py-16 max-w-4xl">
         {/* Hero Section */}
         <div className="text-center mb-16 animate-fade-up">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-foreground">
+          <h1 className="text-5xl md:text-7xl font-heading font-bold mb-4 moon-glow-text">
             🌙 Let's Get You Into Bed
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl font-primary text-muted-foreground max-w-2xl mx-auto">
             Tonight's dreamy bedtime story
           </p>
         </div>
@@ -83,10 +84,10 @@ const Home = () => {
         {/* Story Content */}
         <article className="bg-card/60 backdrop-blur-sm border border-border/50 rounded-2xl p-8 md:p-12 animate-scale-in hover-lift">
           <header className="mb-8">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
+            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4 text-foreground">
               {latestStory.title}
             </h2>
-            <p className="text-lg text-primary font-medium">
+            <p className="text-lg font-primary text-primary font-medium">
               {new Date(latestStory.date).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
@@ -97,26 +98,26 @@ const Home = () => {
 
           <div className="prose prose-lg dark:prose-invert prose-p:text-foreground/90 prose-p:leading-relaxed prose-headings:text-foreground max-w-none">
             {latestStory.content.split("\n\n").map((paragraph, index) => (
-              <p
+              <ScrollReveal
                 key={index}
-                className="mb-6 animate-fade-up"
-                style={{ animationDelay: `${index * 100}ms` }}
+                containerClassName="mb-6"
+                textClassName="text-lg font-primary leading-relaxed"
               >
                 {paragraph}
-              </p>
+              </ScrollReveal>
             ))}
           </div>
 
           <div className="text-center mt-12 pt-8 border-t border-primary/20">
             <div className="animate-fade-up">
-              <p className="text-3xl font-bold text-primary mb-3">Good night</p>
-              <p className="text-2xl text-foreground font-medium">Sweet dreams 🌙✨</p>
+              <p className="text-3xl font-heading font-bold text-primary mb-3">Good night</p>
+              <p className="text-2xl font-primary text-foreground font-medium">Sweet dreams 🌙✨</p>
             </div>
           </div>
 
           <div className="text-center mt-8">
             <Link to={`/stories/${latestStory.slug}`}>
-              <Button variant="ghost" className="hover:bg-card/60">
+              <Button variant="ghost" className="font-primary hover:bg-card/60">
                 View full story →
               </Button>
             </Link>
