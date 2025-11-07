@@ -23,8 +23,8 @@ const StoryDetail = () => {
   useEffect(() => {
     const loadStory = async () => {
       try {
-        const { data, error } = await supabase
-          .from('stories' as any)
+        const { data, error } = await (supabase as any)
+          .from('stories')
           .select('*')
           .eq('slug', slug)
           .maybeSingle();

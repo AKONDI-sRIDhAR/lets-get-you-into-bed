@@ -24,8 +24,8 @@ const Home = () => {
     // Load the latest story from database
     const loadLatestStory = async () => {
       try {
-        const { data, error } = await supabase
-          .from('stories' as any)
+        const { data, error } = await (supabase as any)
+          .from('stories')
           .select('*')
           .order('date', { ascending: false })
           .limit(1)
