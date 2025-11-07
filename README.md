@@ -1,6 +1,6 @@
 Let's Get You Into Bed 🌙
 A cozy bedtime stories site with daily AI-generated tales for kids (4-10). Features witty Akbar-Birbal or Tenali Ramakrishna stories, automated via n8n at 8 PM IST.
-Live: lets-get-you-into-bed.vercel.app
+Live: https://lets-get-you-into-bed.vercel.app/
 Tech
 
 Next.js + Tailwind
