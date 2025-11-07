@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import StarField from "@/components/StarField";
 import ScrollReveal from "@/components/ScrollReveal";
+import VariableProximity from "@/components/VariableProximity";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Story {
@@ -17,13 +18,14 @@ interface Story {
 const Home = () => {
   const [latestStory, setLatestStory] = useState<Story | null>(null);
   const [loading, setLoading] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Load the latest story from database
     const loadLatestStory = async () => {
       try {
         const { data, error } = await supabase
-          .from('stories')
+          .from('stories' as any)
           .select('*')
           .order('date', { ascending: false })
           .limit(1)
@@ -67,14 +69,21 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative" ref={containerRef}>
       <StarField />
       
       <div className="relative z-10 container mx-auto px-6 py-16 max-w-4xl">
         {/* Hero Section */}
         <div className="text-center mb-16 animate-fade-up">
-          <h1 className="text-5xl md:text-7xl font-heading font-bold mb-4 moon-glow-text">
-            🌙 Let's Get You Into Bed
+          <h1 className="text-5xl md:text-7xl font-heading font-bold mb-4 moon-text">
+            🌙 <VariableProximity
+              label="Let's Get You Into Bed"
+              fromFontVariationSettings="'wght' 400"
+              toFontVariationSettings="'wght' 700"
+              containerRef={containerRef}
+              radius={150}
+              falloff="gaussian"
+            />
           </h1>
           <p className="text-xl font-primary text-muted-foreground max-w-2xl mx-auto">
             Tonight's dreamy bedtime story

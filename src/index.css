@@ -53,9 +53,8 @@ All colors MUST be HSL.
     /* Animation */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     
-    /* Moon glow colors */
-    --moon-glow: 260 60% 85%;
-    --moon-bright: 50 100% 95%;
+    /* Moon bright yellow color */
+    --moon-yellow: 48 100% 67%;
   }
 
   .dark {
@@ -145,20 +144,6 @@ All colors MUST be HSL.
     }
   }
 
-  @keyframes star-shine {
-    0%, 100% { 
-      text-shadow: 0 0 10px hsl(var(--moon-bright)), 
-                   0 0 20px hsl(var(--moon-glow)), 
-                   0 0 30px hsl(var(--lavender-soft));
-    }
-    50% { 
-      text-shadow: 0 0 20px hsl(var(--moon-bright)), 
-                   0 0 40px hsl(var(--moon-glow)), 
-                   0 0 60px hsl(var(--lavender-soft)),
-                   0 0 80px hsl(var(--lavender-bright));
-    }
-  }
-
   .animate-fade-up {
     animation: fade-up 0.8s ease-out;
   }
@@ -176,15 +161,8 @@ All colors MUST be HSL.
     box-shadow: var(--shadow-glow);
   }
 
-  .moon-glow-text {
-    background: linear-gradient(135deg, 
-      hsl(var(--moon-bright)), 
-      hsl(var(--moon-glow)), 
-      hsl(var(--lavender-soft)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: star-shine 10s ease-in-out infinite;
+  .moon-text {
+    color: hsl(var(--moon-yellow));
   }
 
   body {

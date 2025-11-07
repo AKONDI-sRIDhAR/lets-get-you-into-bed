@@ -24,7 +24,7 @@ const StoryDetail = () => {
     const loadStory = async () => {
       try {
         const { data, error } = await supabase
-          .from('stories')
+          .from('stories' as any)
           .select('*')
           .eq('slug', slug)
           .maybeSingle();
