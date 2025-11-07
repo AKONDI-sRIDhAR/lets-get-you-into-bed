@@ -52,6 +52,9 @@ All colors MUST be HSL.
 
     /* Animation */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Moon bright yellow color */
+    --moon-yellow: 48 100% 67%;
   }
 
   .dark {
@@ -156,5 +159,13 @@ All colors MUST be HSL.
   .hover-lift:hover {
     transform: translateY(-8px) scale(1.02);
     box-shadow: var(--shadow-glow);
+  }
+
+  .moon-text {
+    color: hsl(var(--moon-yellow));
+  }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
   }
 }
